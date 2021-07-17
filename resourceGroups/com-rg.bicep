@@ -19,6 +19,6 @@ resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2020-08
 }
 
 resource networkWatcher 'Microsoft.Network/networkWatchers@2020-07-01' = {
-  name: 'com-nw-${nameEnvironment}-neu-${uniqueString(subscription().subscriptionId)}'
+  name: 'com-nw-${nameEnvironment}-neu'
   location: 'northeurope'
 }
