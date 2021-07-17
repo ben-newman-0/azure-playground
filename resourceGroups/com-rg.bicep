@@ -3,7 +3,7 @@
 param nameEnvironment string
 
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2020-08-01' = {
-  name: 'com-log-${nameEnvironment}-neu-${uniqueString(resourceGroup().id)}'
+  name: 'com-log-${nameEnvironment}-neu-${uniqueString(subscription().subscriptionId)}'
   location: 'northeurope'
   properties: {
     sku: {
