@@ -17,3 +17,8 @@ resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2020-08
     publicNetworkAccessForQuery: 'Disabled'
   }
 }
+
+resource networkWatcher 'Microsoft.Network/networkWatchers@2020-07-01' = {
+  name: 'com-nw-${nameEnvironment}-neu-${uniqueString(subscription().subscriptionId)}'
+  location: 'northeurope'
+}
