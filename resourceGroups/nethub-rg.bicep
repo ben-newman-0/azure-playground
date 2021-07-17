@@ -18,11 +18,11 @@ resource publicIPAddressVirtualNetworkGateway 'Microsoft.Network/publicIPAddress
   name: 'nethub-pip-vgw-${nameEnvironment}-neu-${uniqueString(subscription().subscriptionId)}'
   location: 'northeurope'
   sku: {
-    name: 'Standard'
+    name: 'Basic'
     tier: 'Regional'
   }
   properties: {
-    publicIPAllocationMethod: 'Static'
+    publicIPAllocationMethod: 'Dynamic' // Basic VGW SKU requires Dynamic
     publicIPAddressVersion: 'IPv4'
   }
 }
