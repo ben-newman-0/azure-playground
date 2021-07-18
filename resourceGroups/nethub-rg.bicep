@@ -93,3 +93,58 @@ resource virtualNetworkGateway 'Microsoft.Network/virtualNetworkGateways@2020-07
     }
   }
 }
+
+resource networkInterfaceDns 'Microsoft.Network/networkInterfaces@2020-07-01' = {
+  name: 'nethub-nic-dns-${nameEnvironment}-neu-${uniqueString(subscription().subscriptionId)}'
+  location: 'northeurope'
+  properties: {
+    ipConfigurations: [
+      {
+        properties: {
+          subnet: {
+            id: virtualNetwork.properties.subnets[0].id
+          }
+        }
+        name: 'nethub'
+      }
+    ]
+  }
+}
+
+var virtualMachineDnsName = 'nethub-vm-dns-${nameEnvironment}-neu-${uniqueString(subscription().subscriptionId)}'
+resource virtualMachineDns 'Microsoft.Compute/virtualMachines@2020-12-01' = {
+  name: virtualMachineDnsName
+  location: 'northeurope'
+  properties: {
+    hardwareProfile: {
+      vmSize: 'Standard_B1s'
+    }
+    storageProfile: {
+      imageReference: {
+        publisher: 'canonical'
+        offer: '0001-com-ubuntu-server-focal'
+        sku: '20_04-lts-gen2'
+        version: 'latest'
+      }
+      osDisk: {
+        name: 'nethub-osdisk-dns-${nameEnvironment}-neu-${uniqueString(subscription().subscriptionId)}'
+        createOption: 'FromImage'
+        managedDisk: {
+          storageAccountType: 'StandardSSD_LRS'
+        }
+      }
+    }
+    osProfile: {
+      computerName: virtualMachineDnsName
+      adminUsername: 'adm-dns'
+      adminPassword: 'Passw0rdPassw0rd!'
+    }
+    networkProfile: {
+      networkInterfaces: [
+        {
+          id: networkInterfaceDns.id
+        }
+      ]
+    }
+  }
+}
