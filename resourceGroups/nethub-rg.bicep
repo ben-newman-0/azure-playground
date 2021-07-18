@@ -6,6 +6,11 @@ param nameEnvironment string
 @secure()
 param vpnClientRootPublicCertData string
 
+@minLength(6)
+@maxLength(72)
+@secure()
+param virtualMachineDnsAdminPassword string
+
 var virtualNetworkGatewayName = 'nethub-vgw-${nameEnvironment}-neu-${uniqueString(subscription().subscriptionId)}'
 
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2020-07-01' = {
@@ -137,7 +142,7 @@ resource virtualMachineDns 'Microsoft.Compute/virtualMachines@2020-12-01' = {
     osProfile: {
       computerName: virtualMachineDnsName
       adminUsername: 'adm-dns'
-      adminPassword: 'Passw0rdPassw0rd!'
+      adminPassword: virtualMachineDnsAdminPassword
     }
     networkProfile: {
       networkInterfaces: [
