@@ -152,4 +152,17 @@ resource virtualMachineDns 'Microsoft.Compute/virtualMachines@2020-12-01' = {
       ]
     }
   }
+  identity: {
+    type: 'SystemAssigned' // Needed for AAD auth extension
+  }
+
+  resource virtualMachineDns_extensionAad 'extensions@2020-12-01' = {
+    name: 'AADSSHLoginForLinux'
+    location: 'northeurope'
+    properties: {
+      publisher: 'Microsoft.Azure.ActiveDirectory'
+      type: 'AADSSHLoginForLinux'
+      typeHandlerVersion: '1.0'
+    }
+  }
 }
