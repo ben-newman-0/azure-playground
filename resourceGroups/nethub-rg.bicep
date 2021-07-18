@@ -22,7 +22,7 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2020-07-01' = {
         properties: {
           addressPrefix: '10.1.0.0/24'
         }
-        name: 'nethub-snet-com-${nameEnvironment}-neu-${uniqueString(subscription().subscriptionId)}'
+        name: 'nethub-snet-nethub-${nameEnvironment}-neu-${uniqueString(subscription().subscriptionId)}'
       }
       {
         properties: {
