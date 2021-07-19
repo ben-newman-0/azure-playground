@@ -1,6 +1,7 @@
-apt-get update && apt-get upgrade -y
-apt-get install -y bind9
+echo 'Installing bind9...'
+apt-get update && apt-get install -y bind9
 
+echo 'Writing bind configuration to /etc/bind/named.conf.options...'
 cat > /etc/bind/named.conf.options << EOF
 options {
   directory "/var/cache/bind";
@@ -18,4 +19,5 @@ options {
 };
 EOF
 
+echo 'Restarting bind service...'
 service bind9 restart
