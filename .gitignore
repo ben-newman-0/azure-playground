@@ -5,6 +5,9 @@
 # Ignore macOS Finder config
 .DS_Store
 
+# Ignore private parameters files
+parameters.*.json
+
 ####################################
 # End repository specific ignores
 ####################################
