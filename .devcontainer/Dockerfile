@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/azure-powershell:6.0.0-debian-9
+FROM mcr.microsoft.com/azure-powershell:7.0.0-debian-9
 
 # [Option] Install zsh
 ARG INSTALL_ZSH="false"
