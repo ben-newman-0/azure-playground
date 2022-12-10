@@ -1,31 +1,32 @@
-// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
-// https://github.com/microsoft/vscode-dev-containers/tree/v0.177.0/containers/powershell
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
 {
-	"name": "PowerShell",
-	"dockerFile": "Dockerfile",
+	"name": "Ubuntu",
+	"image": "mcr.microsoft.com/devcontainers/base:jammy",
 
-	// Set *default* container specific settings.json values on container create.
-	"settings": { 
-		"terminal.integrated.shell.linux": "/usr/bin/pwsh"
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	"features": {
+		"ghcr.io/devcontainers/features/azure-cli:1": {},
+		"ghcr.io/devcontainers/features/powershell:1": {
+			"version": "7.2"
+		}
 	},
-
-	// Add the IDs of extensions you want installed when the container is created.
-	"extensions": [
-		"ms-vscode.powershell",
-		"ms-azuretools.vscode-bicep"
-	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 
-	// Uncomment the next line to run commands after the container is created. This gets run in bash which is why we call `pwsh`.
-	// "postCreateCommand": "pwsh -c '$PSVersionTable'",
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": "pwsh -c \"Install-Module Az -Force\"",
 
-	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-	"remoteUser": "vscode",
+	// Configure tool-specific properties.
+	// "customizations": {},
 
-	// Mount local Azure context configuration into devcontainer
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+
 	"mounts": [
-		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.Azure,target=/home/vscode/.Azure,type=bind,consistency=cached"
+		// Mount local .azure to both .azure and .Azure because Linux FS is case-sensitive. AZ PS uses .Azure and AZ CLI uses .azure.
+		"source=/Users/ben/.azure,target=/home/vscode/.azure,type=bind,consistency=cached",
+		"source=/Users/ben/.azure,target=/home/vscode/.Azure,type=bind,consistency=cached"
 	]
 }
